@@ -3,8 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.km.todo.MainActivity">
     <item
+        android:id="@+id/menu_resister"
+        android:icon="@drawable/ic_done_black_24dp"
+        android:orderInCategory="101"
+        android:title="@string/register"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_edit"
+        android:icon="@drawable/ic_edit_black_24dp"
+        android:orderInCategory="101"
+        android:title="@string/edit"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_delete"
+        android:icon="@drawable/ic_delete_black_24dp"
+        android:orderInCategory="101"
+        android:title="@string/delete"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="101"
         android:title="@string/action_settings"
         app:showAsAction="never" />
 </menu>
