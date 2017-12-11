@@ -8,4 +8,10 @@
     tools:context="com.example.km.todo.EditActivity"
     tools:showIn="@layout/activity_edit">
 
+    <FrameLayout
+        android:id="@+id/container_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>

@@ -27,6 +27,7 @@
 
     <!--about this app -->
     <string name="about_this_app">This app is simplest to-do management tool.</string>
+    <string name="hello_blank_fragment">test</string>
 
 
 </resources>
