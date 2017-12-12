@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.km.todo.common.IntentKey
+import com.example.km.todo.common.ModeInEit
 
 
 /**
@@ -77,8 +79,11 @@ class EditFragment : Fragment() {
     companion object {
         // TODO: Rename parameter arguments, choose names that match
         // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-        private val ARG_PARAM1 = "param1"
-        private val ARG_PARAM2 = "param2"
+        private val ARG_title = IntentKey.TITLE.name
+        private val ARG_deadline = IntentKey.DEADLINE.name
+        private val ARG_taskdetail = IntentKey.TASK_DETAIL.name
+        private val ARG_isCompleted = IntentKey.IS_COMPLETED.name
+        private val ARG_mode = IntentKey.MODE_IN_EDIT.name
 
         /**
          * Use this factory method to create a new instance of
@@ -89,11 +94,14 @@ class EditFragment : Fragment() {
          * @return A new instance of fragment EditFragment.
          */
         // TODO: Rename and change types and number of parameters
-        fun newInstance(param1: String, param2: String): EditFragment {
+        fun newInstance(title: String, deadline: String, taskdetail : String, isCompleted : Boolean, mode : ModeInEit): EditFragment {
             val fragment = EditFragment()
             val args = Bundle()
-            args.putString(ARG_PARAM1, param1)
-            args.putString(ARG_PARAM2, param2)
+            args.putString(ARG_title, title)
+            args.putString(ARG_deadline, deadline)
+            args.putString(ARG_taskdetail, taskdetail)
+            args.putBoolean(ARG_isCompleted, isCompleted)
+            args.putSerializable(ARG_mode, mode)
             fragment.arguments = args
             return fragment
         }

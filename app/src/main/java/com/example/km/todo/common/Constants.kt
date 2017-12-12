@@ -11,3 +11,7 @@ enum class IntentKey {
 enum class ModeInEit {
     NEW_ENTRY, EDIT
 }
+
+enum class FragmentTag {
+    EDIT
+}

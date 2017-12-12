@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.example.km.todo.common.FragmentTag
 import com.example.km.todo.common.IntentKey.*
 import com.example.km.todo.common.ModeInEit
 import kotlinx.android.synthetic.main.activity_main.*
@@ -56,7 +57,14 @@ class MainActivity : AppCompatActivity() {
                          mode : ModeInEit) {
 
         if(isTwoPain == true){
-
+            supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.container_detail, EditFragment.newInstance(title,deadline,taskDetail,isCompleted,mode), FragmentTag.EDIT.toString())
+                    .commit()
+//            val fragmentManager = supportFragmentManager
+//            val fragmentTransaction = fragmentManager.beginTransaction()
+//            fragmentTransaction.add(R.id.container_detail, EditFragment.newInstance("1","1"))
+//            fragmentTransaction.commit()
             return
 
         }
