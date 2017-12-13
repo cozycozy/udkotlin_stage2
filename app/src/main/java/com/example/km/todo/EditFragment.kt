@@ -4,11 +4,10 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.example.km.todo.common.IntentKey
 import com.example.km.todo.common.ModeInEit
+import kotlinx.android.synthetic.main.fragment_edit.*
 
 
 /**
@@ -22,23 +21,46 @@ import com.example.km.todo.common.ModeInEit
 class EditFragment : Fragment() {
 
     // TODO: Rename and change types of parameters
-    private var mParam1: String? = null
-    private var mParam2: String? = null
+    private var title: String? = ""
+    private var deadline: String? = ""
+    private var taskDetail: String? = ""
+    private var isCmpleted: Boolean? = false
+    private var mode: ModeInEit? = null
 
     private var mListener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            mParam1 = arguments.getString(ARG_PARAM1)
-            mParam2 = arguments.getString(ARG_PARAM2)
+            title = arguments.getString(ARG_title)
+            deadline = arguments.getString(ARG_deadline)
+            taskDetail = arguments.getString(ARG_taskdetail)
+            isCmpleted = arguments.getBoolean(ARG_isCompleted)
+            mode = arguments.getSerializable(ARG_mode) as ModeInEit?
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.fragment_edit, container, false)
+
+        val view = inflater!!.inflate(R.layout.fragment_edit, container, false)
+        setHasOptionsMenu(true)
+        return view
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu?.apply {
+            findItem(R.id.menu_delete).isVisible = false
+            findItem(R.id.menu_edit).isVisible = false
+            findItem(R.id.menu_resister).isVisible = true
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return super.onOptionsItemSelected(item)
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -46,6 +68,28 @@ class EditFragment : Fragment() {
         if (mListener != null) {
             mListener!!.onFragmentInteraction(uri)
         }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        updateUI(mode)
+
+    }
+
+    private fun updateUI(mode: ModeInEit?) {
+
+        when(mode) {
+            ModeInEit.NEW_ENTRY -> {
+
+            }
+            ModeInEit.EDIT -> {
+                checkBox.visibility = View.INVISIBLE
+            }
+
+
+        }
+
     }
 
     override fun onAttach(context: Context?) {
