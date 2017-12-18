@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.*
 import com.example.km.todo.common.IntentKey
 import com.example.km.todo.common.ModeInEit
+import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_edit.*
 
 
@@ -60,20 +61,74 @@ class EditFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if(item!!.itemId == R.id.menu_resister) recordToRealmDB(mode)
+
         return super.onOptionsItemSelected(item)
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        if (mListener != null) {
-            mListener!!.onFragmentInteraction(uri)
+    private fun recordToRealmDB(mode: ModeInEit?) {
+
+        //期日とタイトルがセットされていない場合はエラー
+        val requireInput = isRequiredFilled()
+        if (requireInput) return
+
+        when (mode) {
+            ModeInEit.NEW_ENTRY -> addNewTodo()
+            ModeInEit.EDIT -> editTodo()
         }
+
+        mListener?.onDataEdited()
+
+        //フラグメントを閉じる
+        fragmentManager.beginTransaction().remove(this).commit()
+
     }
+
+    private fun isRequiredFilled(): Boolean {
+
+        if( inputTitleText.text.toString() == ""){
+            inputTitle.error = getString(R.string.error)
+            return false
+        }
+
+        if( inputDateText.text.toString() == ""){
+            inputDate.error = getString(R.string.error)
+            return  false
+        }
+
+        return true
+    }
+
+    private fun editTodo() {
+
+
+    }
+
+    private fun addNewTodo() {
+
+        val realm = Realm.getDefaultInstance()
+        realm.beginTransaction()
+        val newTodo = realm.createObject(TodoModel::class.java)
+
+        newTodo.apply {
+            title = inputTitleText.toString()
+            deadLine = inputDateText.toString()
+            taskDetail = inputDetailText.toString()
+            isCompleted = if(checkBox.isChecked) true else false
+        }
+
+        realm.commitTransaction()
+
+    }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         updateUI(mode)
+        imageButton.setOnClickListener{
+            mListener!!.onDatePickerLaunched()
+
+        }
 
     }
 
@@ -117,7 +172,9 @@ class EditFragment : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
+        fun onDatePickerLaunched()
         fun onFragmentInteraction(uri: Uri)
+        fun onDataEdited ()
     }
 
     companion object {
